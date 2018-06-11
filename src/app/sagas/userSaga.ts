@@ -1,8 +1,9 @@
-import { put, takeEvery } from 'redux-saga/effects';
+import { put, call, takeEvery, takeLatest } from 'redux-saga/effects';
 import axios from 'axios';
 import { UserActions } from '../actions';
 
-function* fetchUsers(action: any): IterableIterator<any> {
+
+export function* fetchUsers(): IterableIterator<any> {
     try {
         const response = yield axios.get('https://react-ssr-api.herokuapp.com/users');
         yield put(UserActions.fetchUsersSuccess(response.data));
@@ -11,6 +12,6 @@ function* fetchUsers(action: any): IterableIterator<any> {
     }
 }
 
-export function* usersSagas(): IterableIterator<any> {
-    yield takeEvery(UserActions.Type.USERS_FETCH, fetchUsers);
-}
+// export function* usersSagas(): IterableIterator<any> {
+//     yield takeEvery(UserActions.Type.USERS_FETCH, fetchUsers);
+// }

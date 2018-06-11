@@ -7,10 +7,7 @@ const initialState: RootStateModel.UsersState = [];
 export const userReducer = handleActions<RootStateModel.UsersState, UserModel>(
     {
         [UserActions.Type.USERS_FETCH_SUCCESS]: (state: any, action: any) => {
-            return {
-                ...state,
-                ...action.payload
-            };
+            return action.payload;
         }
     },
     initialState

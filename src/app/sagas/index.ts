@@ -1,11 +1,14 @@
+import createSagaMiddleware from 'redux-saga';
 import * as userSagas from './userSaga';
 
 const sagas: any = {
     ...userSagas
 };
 
-export function registerWithMiddleware(middleware: { run: Function }) {
+export const sagaMiddleware = createSagaMiddleware();
+
+export function runSagas() {
     for (let name in sagas) {
-        middleware.run(sagas[name]);
+        sagaMiddleware.run(sagas[name]);
     }
 }

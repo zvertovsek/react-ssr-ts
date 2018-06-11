@@ -1,13 +1,27 @@
 import * as React from 'react';
 import { Route } from 'react-router-dom';
+import { RouteConfig } from 'react-router-config';
 import Home from '../app/components/Home';
-import Users from '../app/components/Users';
+import Users, { loadData } from '../app/components/Users';
 
-export default () => {
-    return (
-        <div>
-            <Route exact={true} path="/" component={Home} />
-            <Route exact={true} path="/users" component={Users} />
-        </div>
-    );
+interface IRouteConfig extends RouteConfig {
+    loadData?: any;
+    exact?: any;
+    path: string;
+    component: any;
 }
+
+const Routes: IRouteConfig[] = [
+    {
+        path: '/',
+        component: Home,
+        exact: true
+    },
+    {
+        path: '/users',
+        component: Users,
+        loadData: loadData
+    }
+];
+
+export default Routes;

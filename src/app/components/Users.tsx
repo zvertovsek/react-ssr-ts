@@ -1,14 +1,15 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators, Dispatch } from 'redux';
-import { RouteComponentProps } from 'react-router';
+// import { RouteComponentProps } from 'react-router';
+import { RouteConfigComponentProps } from 'react-router-config';
 import { UserActions } from '../actions';
 import { RootStateModel } from '../models/state';
 import { omit } from '../../utils';
 
 
 export namespace Users {
-    export interface IProps extends RouteComponentProps<void> {
+    export interface IProps extends RouteConfigComponentProps<void> {
         users: RootStateModel.UsersState;
         actions: UserActions;
     }
@@ -27,7 +28,7 @@ export namespace Users {
 class Users extends React.Component<Users.IProps> {
     
     componentDidMount(){
-        this.props.actions.fetchUsers()
+        //this.props.actions.fetchUsers()
     }
 
     renderUsers(){
@@ -37,9 +38,10 @@ class Users extends React.Component<Users.IProps> {
     }
     
     public render(): JSX.Element {
+        //console.log(this.props.users);
         return (
             <div>
-                <div>Best Home Component</div>
+                <div>Users Component</div>
                 <ul>{this.renderUsers()}</ul>
             </div>
         );
@@ -47,5 +49,9 @@ class Users extends React.Component<Users.IProps> {
 }
 
 
+function loadData(store: any) {
+    return [];
+}
 
-export default Users;
+export { loadData };
+export default Users as any;
