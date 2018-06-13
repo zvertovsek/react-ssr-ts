@@ -6,13 +6,23 @@ import { renderRoutes } from 'react-router-config';
 import createStore from './store';
 import Routes from '../app/routes';
 
-const store = createStore();
+interface W extends Window {
+    __STATE__?: Object;
+}
 
-ReactDOM.hydrate(
-    <Provider store={store}>
-        <BrowserRouter>
-        <div>{renderRoutes(Routes)}</div>
-        </BrowserRouter>
-    </Provider>, 
-    document.querySelector("#root")
-);
+((window: W) => {
+    const serverState = window.__STATE__;
+    const store = createStore(serverState);
+
+    delete window.__STATE__;
+
+    ReactDOM.hydrate(
+        <Provider store={store}>
+            <BrowserRouter>
+            <div>{renderRoutes(Routes)}</div>
+            </BrowserRouter>
+        </Provider>, 
+        document.querySelector("#root")
+    );
+    
+})(window);

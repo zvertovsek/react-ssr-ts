@@ -1,19 +1,24 @@
 // server store
 
 import { Store, createStore, applyMiddleware } from 'redux';
-import {  } from 'redux-saga';
 import { RootStateModel, rootReducer } from '../app/reducers';
+import axios from 'axios';
 import { sagaMiddleware, runSagas } from "../app/sagas";
 
-export default () => {
+export default (req: any) => {
     const store = createStore(
         rootReducer, 
         {}, 
         applyMiddleware(sagaMiddleware)
     );
 
-   runSagas();
+    const __API__: any = axios.create({
+        baseURL: 'https://react-ssr-api.herokuapp.com',
+        headers: { cookie: req.get('cookie') ? req.get('cookie') : '' }
+    });
 
-    return { store, sagaMiddleware };
+    runSagas({ __API__ });
+
+    return { store, sagaMiddleware, __API__ };
 }
 

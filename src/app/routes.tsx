@@ -1,26 +1,33 @@
 import * as React from 'react';
 import { Route } from 'react-router-dom';
 import { RouteConfig } from 'react-router-config';
-import Home from '../app/components/Home';
-import Users, { loadData } from '../app/components/Users';
+
+import App from '../app';
+import HomePage from '../app/pages/HomePage';
+import UsersPage from '../app/pages/UsersPage';
 
 interface IRouteConfig extends RouteConfig {
-    loadData?: any;
+    preloaders?: any;
     exact?: any;
-    path: string;
+    routes?: IRouteConfig[];
+    path?: string;
     component: any;
 }
 
 const Routes: IRouteConfig[] = [
     {
-        path: '/',
-        component: Home,
-        exact: true
-    },
-    {
-        path: '/users',
-        component: Users,
-        loadData: loadData
+        ...App,
+        routes: [
+            {
+                ...HomePage,
+                path: '/',
+                exact: true
+            },
+            {
+                ...UsersPage,
+                path: '/users'
+            }
+        ]
     }
 ];
 

@@ -6,6 +6,7 @@ import { RouteConfigComponentProps } from 'react-router-config';
 import { UserActions } from '../actions';
 import { RootStateModel } from '../models/state';
 import { omit } from '../../utils';
+import { usersInitializer } from '../sagas/userSaga';
 
 
 export namespace Users {
@@ -25,10 +26,10 @@ export namespace Users {
         actions: bindActionCreators(omit(UserActions, 'Type'), dispatch)
     })
 )
-class Users extends React.Component<Users.IProps> {
+class UsersPage extends React.Component<Users.IProps> {
     
     componentDidMount(){
-        //this.props.actions.fetchUsers()
+        this.props.actions.fetchUsers()
     }
 
     renderUsers(){
@@ -38,7 +39,6 @@ class Users extends React.Component<Users.IProps> {
     }
     
     public render(): JSX.Element {
-        //console.log(this.props.users);
         return (
             <div>
                 <div>Users Component</div>
@@ -49,9 +49,9 @@ class Users extends React.Component<Users.IProps> {
 }
 
 
-function loadData(store: any) {
-    return [];
-}
-
-export { loadData };
-export default Users as any;
+export default {
+    preloaders: [ 
+        { fn: usersInitializer, attrs: {} } 
+    ],
+    component: UsersPage
+};

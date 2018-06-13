@@ -1,14 +1,16 @@
 import createSagaMiddleware from 'redux-saga';
-import * as userSagas from './userSaga';
+import { usersSagasListener } from './userSaga';
+import { authSagasListener } from './authSaga';
 
 const sagas: any = {
-    ...userSagas
+    usersSagasListener,
+    authSagasListener
 };
 
 export const sagaMiddleware = createSagaMiddleware();
 
-export function runSagas() {
+export function runSagas(options: any = {}) {
     for (let name in sagas) {
-        sagaMiddleware.run(sagas[name]);
+        sagaMiddleware.run(sagas[name], options);
     }
 }
