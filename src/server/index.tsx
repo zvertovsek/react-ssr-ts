@@ -25,7 +25,6 @@ type Loader = {
     attrs: Object;
 }
 
-
 app.use('/api', proxy('https://react-ssr-api.herokuapp.com', {
     proxyReqOptDecorator(opts: any){
         opts.headers['x-forwarded-host'] = 'localhost:'+_PORT
